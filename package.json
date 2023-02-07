@@ -1,0 +1,42 @@
+{
+  "name": "tours-portfolio",
+  "version": "0.0.1",
+  "description": "Sample Portfolio Project to demonstrate Node Expertise",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/am-it1601/node-sample-tours.git"
+  },
+  "keywords": [
+    "Tours",
+    "NodeJs",
+    "CipherCru",
+    "SSR",
+    "HTML"
+  ],
+  "author": "Amit Agarwal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/am-it1601/node-sample-tours/issues"
+  },
+  "homepage": "https://github.com/am-it1601/node-sample-tours#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^6.7.0",
+    "helmet": "^6.0.1",
+    "http-status-codes": "^2.2.0",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.9.1",
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.9.1",
+    "slugify": "^1.6.5",
+    "validator": "^13.9.0",
+    "xss-clean": "^0.1.1"
+  }
+}
