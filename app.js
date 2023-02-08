@@ -5,6 +5,9 @@ const helmet = require('helmet');
 const { StatusCodes } = require('http-status-codes');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
+const AppError = require('./exceptions/app-error');
+const globalErrorHanlder = require('./exceptions/globalErrorHanlder');
+const tourRouter = require('./routes/tour-route');
 
 const app = express();
 
@@ -30,12 +33,14 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(`${__dirname}/public`));
 
+app.use('/api/v1/tour', tourRouter);
+
 // Invalid route Handler
-// app.all('*', (req, res, next) => {
-//     next(new AppError(`Cannot find the url ${req.url}`, StatusCodes.NOT_FOUND));
-// });
+app.all('*', (req, res, next) => {
+    next(new AppError(`Cannot find the url ${req.url}`, StatusCodes.NOT_FOUND));
+});
 
 // Global Error Controller for all the errors.
-//app.use(globalErrorController);
+app.use(globalErrorHanlder);
 
 module.exports = app;
