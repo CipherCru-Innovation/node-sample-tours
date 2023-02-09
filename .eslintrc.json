@@ -1,0 +1,69 @@
+{
+    "extends": ["airbnb", "prettier", "plugin:node/recommended"],
+    "plugins": ["prettier"],
+    "rules": {
+        "prettier/prettier": [
+            "error",
+            {
+                "endOfLine": "auto"
+            }
+        ],
+        "arrow-parens": "warn",
+        "arrow-spacing": "warn",
+        "class-methods-use-this": "off",
+        "comma-dangle": [
+            "error",
+            {
+                "arrays": "never",
+                "objects": "never",
+                "imports": "never",
+                "exports": "never",
+                "functions": "never"
+            }
+        ],
+        "constructor-super": "warn",
+        "consistent-return": "warn",
+        "func-names": "off",
+        "linebreak-style": ["error", "windows"],
+        "no-async-promise-executor": "error",
+        "no-await-in-loop": "error",
+        "no-console": [
+            "error",
+            {
+                "allow": ["info", "warn", "error"]
+            }
+        ],
+        "no-const-assign": "error",
+        "no-dupe-else-if": "error",
+        "no-irregular-whitespace": "error",
+        "no-invalid-regexp": "error",
+        "no-param-reassign": "off",
+        "no-process-exit": "off",
+        "no-return-await": "off",
+        "no-self-assign": "warn",
+        "no-self-compare": "error",
+        "no-sparse-arrays": "warn",
+        "no-this-before-super": "error",
+        "no-underscore-dangle": "off",
+        "no-unreachable": "error",
+        "no-unused-private-class-members": "error",
+        "no-unused-vars": [
+            "error",
+            {
+                "argsIgnorePattern": "req|res|next|val"
+            }
+        ],
+        "no-use-before-define": "warn",
+        "no-useless-call": "error",
+        "object-shorthand": "off",
+        "prefer-destructuring": [
+            "error",
+            {
+                "object": true,
+                "array": false
+            }
+        ],
+        "spaced-comment": "warn",
+        "use-isnan": "error"
+    }
+}
