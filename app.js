@@ -1,13 +1,15 @@
 const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
+const inflector = require('json-inflector');
 const helmet = require('helmet');
 const { StatusCodes } = require('http-status-codes');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const AppError = require('./exceptions/app-error');
-const globalErrorHanlder = require('./exceptions/globalErrorHanlder');
+const globalErrorHanlder = require('./exceptions/global-error-handler');
 const tourRouter = require('./routes/tour-route');
+const authRouter = require('./routes/auth-route');
 
 const app = express();
 
@@ -22,10 +24,15 @@ const limiter = rateLimit({
     message: 'Too many requests from this client, Please try again later'
 });
 
-app.use('/api', limiter);
-
 app.use(express.json({ limit: '10kb' }));
-
+app.use(
+    '/api',
+    limiter,
+    inflector({
+        request: 'camelizeLower',
+        response: 'underscore'
+    })
+);
 // Data sanitization
 app.use(mongoSanitize());
 app.use(xss());
@@ -33,6 +40,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(`${__dirname}/public`));
 
+app.use('/v1/auth', authRouter);
 app.use('/api/v1/tour', tourRouter);
 
 // Invalid route Handler

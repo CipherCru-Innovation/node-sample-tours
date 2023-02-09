@@ -1,14 +1,10 @@
-const jwtUtils = require('./jwtUtils');
+const jwtUtils = require('./jwt-utils');
 const cookieOption = require('./constants/cookieOptions');
+const { sendSuccess } = require('../factory/reponse-handler');
 
 exports.createAndSendToken = (user, statusCode, res, message) => {
     const token = jwtUtils.signToken(user._id, user.username);
 
     res.cookie('authToken', cookieOption);
-    res.status(statusCode).send({
-        status: 'SUCCESS',
-        token,
-        message,
-        data: { user }
-    });
+    sendSuccess(res, statusCode, { user }, { message, token });
 };

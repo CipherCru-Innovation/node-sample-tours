@@ -33,6 +33,7 @@
         "express-rate-limit": "^6.7.0",
         "helmet": "^6.0.1",
         "http-status-codes": "^2.2.0",
+        "json-inflector": "^1.1.0",
         "jsonwebtoken": "^9.0.0",
         "mongoose": "^6.9.1",
         "morgan": "^1.10.0",

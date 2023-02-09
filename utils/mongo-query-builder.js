@@ -48,12 +48,12 @@ class MongoQueryBuilder {
     }
 
     paginate() {
-        const page = this.queryString.page * 1 || 1;
-        const size = this.queryString.size * 1 || 20;
+        this.page = this.queryString.page * 1 || 1;
+        this.size = this.queryString.size * 1 || 20;
 
-        const skipRecords = (page - 1) * size;
+        const skipRecords = (this.page - 1) * this.size;
 
-        this.query = this.query.skip(skipRecords).limit(size);
+        this.query = this.query.skip(skipRecords).limit(this.size);
         return this;
     }
 
@@ -67,17 +67,24 @@ class MongoQueryBuilder {
         return this;
     }
 
+    build(paginate) {
+        this.filter().fields().sortData();
+        if (paginate === true) this.paginate();
+        return this;
+    }
+
     async getPageData() {
         const totalRecords = await this.query.model.countDocuments();
 
         console.info(this.queryString);
 
         // Include last and first elements
-        const first = this.queryString.page * 1 === 1;
-        const last = totalRecords <= this.queryString.page * this.queryString.size || undefined;
 
-        const totalPage = Math.ceil(totalRecords / this.queryString.size);
-        const currentPage = this.queryString.page * 1 || 1;
+        const last = totalRecords <= this.page * this.size || undefined;
+
+        const totalPage = Math.ceil(totalRecords / this.size);
+        const currentPage = this.page * 1 || 1;
+        const first = currentPage === 1;
 
         return {
             first,
