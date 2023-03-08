@@ -1,5 +1,0 @@
-exports.RESPONSE_STATUS = {
-    SUCESS: 'SUCCESS',
-    FAILURE: 'FAILURE',
-    ERROR: 'ERROR'
-};

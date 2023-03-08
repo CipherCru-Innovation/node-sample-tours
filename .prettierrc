@@ -1,10 +1,13 @@
+# @format
+
 {
-    "singleQuote": true,
-    "tabWidth": 4,
-    "printWidth": 120,
-    "endOfLine": "auto",
-    "bracketSpacing": true,
-    "semi": true,
-    "bracketSameLine": true,
-    "trailingComma": "none"
+    'singleQuote': true,
+    'tabWidth': 4,
+    'printWidth': 80,
+    'endOfLine': 'crlf',
+    'bracketSpacing': true,
+    'semi': true,
+    'bracketSameLine': true,
+    'trailingComma': 'none',
+    'insertPragma': true
 }
