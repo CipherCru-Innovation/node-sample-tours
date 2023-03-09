@@ -1,37 +1,31 @@
 {
-    "extends": ["airbnb", "prettier", "plugin:node/recommended"],
-    "plugins": ["prettier"],
+    "extends": [
+        "airbnb-typescript/base",
+
+        "plugin:@typescript-eslint/recommended",
+        "plugin:import/typescript",
+        "prettier"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "./tsconfig.eslint.json"
+    },
+    "plugins": ["@typescript-eslint", "import", "prettier"],
     "rules": {
-        "prettier/prettier": "error",
         "arrow-parens": "warn",
         "arrow-spacing": "warn",
         "class-methods-use-this": "off",
-        "comma-dangle": [
-            "error",
-            {
-                "arrays": "never",
-                "objects": "never",
-                "imports": "never",
-                "exports": "never",
-                "functions": "never"
-            }
-        ],
-        "constructor-super": "warn",
         "consistent-return": "warn",
+        "constructor-super": "warn",
         "func-names": "off",
-        "linebreak-style": ["error", "windows"],
+        "linebreak-style": ["warn", "windows"],
         "no-async-promise-executor": "error",
         "no-await-in-loop": "error",
-        "no-console": [
-            "error",
-            {
-                "allow": ["info", "warn", "error"]
-            }
-        ],
+        "no-console": "error",
         "no-const-assign": "error",
         "no-dupe-else-if": "error",
-        "no-irregular-whitespace": "error",
         "no-invalid-regexp": "error",
+        "no-irregular-whitespace": "error",
         "no-param-reassign": "off",
         "no-process-exit": "off",
         "no-return-await": "off",
@@ -54,8 +48,14 @@
         "prefer-destructuring": [
             "error",
             {
-                "object": true,
-                "array": false
+                "array": false,
+                "object": true
+            }
+        ],
+        "prettier/prettier": [
+            "warn",
+            {
+                "endOfLine": "auto"
             }
         ],
         "spaced-comment": "warn",

@@ -1,17 +1,17 @@
 /** @format */
 
-import { Document, Schema } from 'mongoose';
+import { Document } from 'mongoose';
 
-interface IUser {
+interface IUser extends Document {
     _id: string;
-    name?: String;
-    email: String;
-    photo?: String;
-    role: String;
-    password: String;
-    passwordConfirm?: String;
+    name?: string;
+    email: string;
+    photo?: string;
+    role: string;
+    password: string;
+    passwordConfirm?: string;
     passwordChangedAt?: Date;
-    passwordResetToken?: String;
+    passwordResetToken?: string;
     passwordResetExpires?: Date;
     isActive: Boolean;
 }

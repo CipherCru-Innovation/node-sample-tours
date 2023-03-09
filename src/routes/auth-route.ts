@@ -8,7 +8,7 @@ import {
     resetPassword,
     logout
 } from '../auth/auth-handler';
-const userRoute = require('./user-route');
+import userRoute from '../routes/user-route';
 
 const router = express.Router();
 

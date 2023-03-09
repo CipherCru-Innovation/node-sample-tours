@@ -4,6 +4,7 @@ import { NextFunction, Request, Response } from 'express';
 
 import { StatusCodes } from 'http-status-codes';
 import AppError from '../exceptions/app-error';
+import ITour from '../models/tour.model';
 
 import Tour from '../models/tours/tour';
 import catchAsync from '../utils/catch-async';
@@ -11,7 +12,8 @@ import catchAsync from '../utils/catch-async';
 export const getOverview = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
         // Get Tours form DB
-        const tours = await Tour.find();
+        const tours: ITour[] = await Tour.find();
+        console.log(tours);
         res.status(200).render('overview', {
             title: 'All tours',
             tours

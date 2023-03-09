@@ -1,9 +1,8 @@
 /** @format */
 
 import mongoose, { HydratedDocument, Schema } from 'mongoose';
-import { bool } from 'sharp';
 import { TOUR_DIFFICULTY } from '../data/tour.difficulty';
-const tourMiddleware = require('./tour-middleware');
+import slugify from 'slugify';
 
 import ITour from '../tour.model';
 
@@ -65,6 +64,36 @@ const tourSchema = new Schema<ITour>(
             required: [true, 'A tour must have a price'],
             min: [1, 'A tour price must be greater than 1']
         },
+        // startLocation: {
+        //     // GeoJson
+        //     type: {
+        //         type: String,
+        //         default: 'Point',
+        //         enum: {
+        //             values: ['Point'],
+        //             messages: 'The can only be type point'
+        //         }
+        //     },
+        //     coordinates: [Number],
+        //     address: String,
+        //     description: String
+        // },
+        // locations: [
+        //     {
+        //         type: {
+        //             type: String,
+        //             default: 'Point',
+        //             enum: {
+        //                 values: ['Point'],
+        //                 messages: 'The can only be type point'
+        //             }
+        //         },
+        //         coordinates: [Number],
+        //         address: String,
+        //         description: String,
+        //         day: Number
+        //     }
+        // ],
         priceDiscount: {
             type: Number,
             validate: {
@@ -129,10 +158,19 @@ tourSchema.virtual('reviews', {
 });
 
 // Save middleware only works with .save() & .create() methods
-tourSchema.pre('save', tourMiddleware.sulgifyTour);
+tourSchema.pre('save', function (this: ITour, next) {
+    this.slug = slugify(this.name.valueOf(), { lower: true });
+    next();
+});
 
-// run with all the queries whcih starts with find such as find, findone, findOneAndUpdate etc.
-tourSchema.pre(/^find/, tourMiddleware.preFindTour);
+// run with all the queries which starts with find such as find, findOne, findOneAndUpdate etc.
+tourSchema.pre(/^find/, function (next) {
+    this.find({ secretTour: { $ne: true } }).populate({
+        path: 'guides',
+        select: '-__v -passwordChangedAt'
+    });
+    next();
+});
 
 // tourSchema.pre('aggregate', function (next) {
 //     this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });

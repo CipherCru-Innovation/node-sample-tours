@@ -1,29 +1,12 @@
 /** @format */
 
-import { Connection, ConnectOptions } from 'mongoose';
+import { ConnectOptions } from 'mongoose';
+import { initMongo } from './dbconfig';
+import { initConfig } from './env.config';
 
-import dotenv from 'dotenv';
-import mongoose from 'mongoose';
-
-dotenv.config({ path: './config.env' });
-
+initConfig();
+initMongo();
 const app = require('./app');
-
-mongoose.set('strictQuery', false);
-
-const connectionOptions: ConnectOptions = {
-    autoIndex: true,
-    autoCreate: true,
-    dbName: process.env.DB_NAME,
-    user: process.env.DB_USERNAME,
-    pass: process.env.DB_PASSWORD
-};
-
-mongoose
-    .connect(process.env.DB_URL, connectionOptions)
-    .then((connection: any) => {
-        console.warn(`Connection established ${connection}`);
-    });
 
 const SERVER_PORT = process.env.SERVER_PORT || 8000;
 

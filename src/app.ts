@@ -9,7 +9,6 @@ import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import { StatusCodes } from 'http-status-codes';
 import mongoSanitize from 'express-mongo-sanitize';
-import xss from 'xss-clean';
 import AppError from './exceptions/app-error';
 import globalErrorHandler from './exceptions/global-error-handler';
 import tourRouter from './routes/tour-route';
@@ -25,24 +24,23 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(cors());
 
 app.use(express.static(path.join(__dirname, 'public')));
+console.log(path.join(__dirname, 'public'));
 
 app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
 
 if (process.env.NODE_ENV !== 'prod') app.use(morgan('dev'));
-
 // Implement rate limiter
-const limiter = rateLimit({
-    max: process.env.RATE_LIMIT,
-    windowMs: process.env.RATE_LIMIT_WINDOW_MS,
-    message: 'Too many requests from this client, Please try again later'
-});
+// const limiter = rateLimit({
+//     max: process.env.RATE_LIMIT as number,
+//     windowMs: process.env.RATE_LIMIT_WINDOW_MS,
+//     message: 'Too many requests from this client, Please try again later'
+// });
 
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
-app.use('/api', limiter);
+//app.use('/api', limiter);
 // Data sanitization
 app.use(mongoSanitize());
-app.use(xss());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/', viewRouter);
@@ -58,4 +56,4 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
 // Global Error Controller for all the errors.
 app.use(globalErrorHandler);
 
-export default app;
+module.exports = app;

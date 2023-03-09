@@ -25,7 +25,7 @@ export class Email {
                 pass: SMTP_PASSWORD
             },
             host: SMTP_HOST,
-            port: SMTP_PORT
+            port: 2525
         };
         this.transporter = nodemailer.createTransport(this.transportOptions);
     }

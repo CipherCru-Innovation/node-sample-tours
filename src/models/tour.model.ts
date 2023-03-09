@@ -1,10 +1,10 @@
 /** @format */
 
-import { Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import IReview from './review.model';
 import IUser from './user.model';
 
-interface ITour {
+interface ITour extends mongoose.Document {
     name: String;
     ratingAverage: Number;
     ratingQuantity: Number;
@@ -21,9 +21,22 @@ interface ITour {
     slug: String;
     secretTout: Boolean;
     guides: Schema.Types.ObjectId | IUser;
+    //startLocation: ILocation;
+    //locations: ILocationWithDays[];
     durationWeeks?: Number;
     reviews?: IReview[];
     createdAt?: Date;
     updatedAt?: Date;
+}
+
+interface ILocation {
+    type: 'Point';
+    coordinates: Number[];
+    address: String;
+    description: String;
+}
+
+interface ILocationWithDays extends ILocation {
+    day: Number;
 }
 export default ITour;
