@@ -4,10 +4,8 @@ type QueryParams = {
     sort?: string | string[];
     page?: number;
     size?: number;
-    fields?: string[];
+    fields?: string;
 };
 
-export interface TourQueryParams extends QueryParams {
-    fields: ['name' | 'id'];
-}
+export interface TourQueryParams extends QueryParams {}
 export default QueryParams;

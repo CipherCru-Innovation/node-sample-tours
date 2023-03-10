@@ -9,6 +9,7 @@ const router = express.Router();
 router.get('/', authHandler.isLoggedIn, viewHandler.getOverview);
 router.get('/tour/:slug', authHandler.isLoggedIn, viewHandler.getTour);
 router.get('/login', authHandler.isLoggedIn, viewHandler.getLoginForm);
+router.get('/signup', authHandler.isLoggedIn, viewHandler.getSignUpFrom);
 router.get('/profile', authHandler.isAuthenticated, viewHandler.getProfile);
 
 export default router;

@@ -117,7 +117,13 @@ body {
     font-size: 2.25rem;
     text-transform: uppercase;
     font-weight: 700;
-    background-image: -webkit-gradient(linear, left top, right top, from(#7dd56f), to(#009242));
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        right top,
+        from(#7dd56f),
+        to(#009242)
+    );
     background-image: linear-gradient(to right, #7dd56f, #009242);
     -webkit-background-clip: text;
     color: transparent;
@@ -126,7 +132,13 @@ body {
     display: inline-block;
 }
 .heading-secondary--error {
-    background-image: -webkit-gradient(linear, left top, right top, from(#ff7730), to(#eb4d4b));
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        right top,
+        from(#ff7730),
+        to(#eb4d4b)
+    );
     background-image: linear-gradient(to right, #ff7730, #eb4d4b);
     font-size: 3.5rem;
 }
@@ -150,7 +162,11 @@ body {
         from(rgba(125, 213, 111, 0.85)),
         to(rgba(40, 180, 135, 0.85))
     );
-    background-image: linear-gradient(to bottom right, rgba(125, 213, 111, 0.85), rgba(40, 180, 135, 0.85));
+    background-image: linear-gradient(
+        to bottom right,
+        rgba(125, 213, 111, 0.85),
+        rgba(40, 180, 135, 0.85)
+    );
 }
 
 .heading-primary {
@@ -324,8 +340,18 @@ body {
 .section-header {
     position: relative;
     height: 38vw;
-    clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--section-rotate)), 0 100%);
-    -webkit-clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--section-rotate)), 0 100%);
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        100% calc(100% - var(--section-rotate)),
+        0 100%
+    );
+    -webkit-clip-path: polygon(
+        0 0,
+        100% 0,
+        100% calc(100% - var(--section-rotate)),
+        0 100%
+    );
 }
 
 .header__hero {
@@ -345,7 +371,13 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: -webkit-gradient(linear, left top, right bottom, from(#7dd56f), to(#009242));
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        right bottom,
+        from(#7dd56f),
+        to(#009242)
+    );
     background-image: linear-gradient(to right bottom, #7dd56f, #009242);
     opacity: 0.85;
 }
@@ -475,8 +507,18 @@ body {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    clip-path: polygon(0 var(--section-rotate), 100% 0, 100% calc(100% - var(--section-rotate)), 0 100%);
-    -webkit-clip-path: polygon(0 var(--section-rotate), 100% 0, 100% calc(100% - var(--section-rotate)), 0 100%);
+    clip-path: polygon(
+        0 var(--section-rotate),
+        100% 0,
+        100% calc(100% - var(--section-rotate)),
+        0 100%
+    );
+    -webkit-clip-path: polygon(
+        0 var(--section-rotate),
+        100% 0,
+        100% calc(100% - var(--section-rotate)),
+        0 100%
+    );
     margin-top: calc(0px - var(--section-rotate));
     position: relative;
     z-index: 1000;
@@ -538,10 +580,26 @@ body {
     padding: calc(5rem + var(--section-rotate)) 0;
     position: relative;
     z-index: 1000;
-    background: -webkit-gradient(linear, left top, right bottom, from(#7dd56f), to(#009242));
+    background: -webkit-gradient(
+        linear,
+        left top,
+        right bottom,
+        from(#7dd56f),
+        to(#009242)
+    );
     background: linear-gradient(to right bottom, #7dd56f, #009242);
-    clip-path: polygon(0 var(--section-rotate), 100% 0, 100% calc(100% - var(--section-rotate)), 0 100%);
-    -webkit-clip-path: polygon(0 var(--section-rotate), 100% 0, 100% calc(100% - var(--section-rotate)), 0 100%);
+    clip-path: polygon(
+        0 var(--section-rotate),
+        100% 0,
+        100% calc(100% - var(--section-rotate)),
+        0 100%
+    );
+    -webkit-clip-path: polygon(
+        0 var(--section-rotate),
+        100% 0,
+        100% calc(100% - var(--section-rotate)),
+        0 100%
+    );
 }
 
 .reviews {
@@ -661,7 +719,13 @@ body {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
-    background: -webkit-gradient(linear, left top, right bottom, from(#7dd56f), to(#009242));
+    background: -webkit-gradient(
+        linear,
+        left top,
+        right bottom,
+        from(#7dd56f),
+        to(#009242)
+    );
     background: linear-gradient(to right bottom, #7dd56f, #009242);
     z-index: 10;
     -webkit-transform: translate(-35%, -50%);
@@ -712,7 +776,13 @@ body {
     -webkit-box-flex: 32rem;
     -ms-flex: 32rem 0 0px;
     flex: 32rem 0 0;
-    background-image: -webkit-gradient(linear, left top, right bottom, from(#7dd56f), to(#009242));
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        right bottom,
+        from(#7dd56f),
+        to(#009242)
+    );
     background-image: linear-gradient(to right bottom, #7dd56f, #009242);
     padding: 4rem 0;
 }
@@ -1043,9 +1113,15 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: -webkit-gradient(linear, left top, right bottom, from(#7dd56f), to(#009242));
+    background-image: -webkit-gradient(
+        linear,
+        left top,
+        right bottom,
+        from(#7dd56f),
+        to(#009242)
+    );
     background-image: linear-gradient(to right bottom, #7dd56f, #009242);
-    opacity: 0.7;
+    opacity: 0.4;
 }
 .card__picture-img {
     -o-object-fit: cover;
@@ -1150,7 +1226,8 @@ body {
     margin: 0 auto;
 }
 
-.login-form {
+.login-form,
+.signup-form {
     margin: 0 auto;
     max-width: 55rem;
     background-color: #fff;
@@ -1250,4 +1327,8 @@ body {
     box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
     -webkit-transform: translateY(-2px);
     transform: translateY(-2px);
+}
+.flex-between {
+    display: flex;
+    justify-content: space-evenly;
 }

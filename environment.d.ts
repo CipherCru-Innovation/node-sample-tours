@@ -1,5 +1,7 @@
 /** @format */
 
+import { Secret } from 'jsonwebtoken';
+
 export {};
 
 declare global {
@@ -11,7 +13,7 @@ declare global {
             DB_PASSWORD: string;
             DB_USERNAME: string;
             DB_NAME: string;
-            JWT_SECRET: string;
+            JWT_SECRET: Secret;
             JWT_EXPIRATION: string;
             JWT_COOKIE_EXPIRES: number;
             RESET_TOKEN_EXPIRY_SECONDS: number;

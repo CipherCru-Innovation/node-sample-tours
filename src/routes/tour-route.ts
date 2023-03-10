@@ -8,7 +8,6 @@ import reviewRouter from './review-route';
 const router = express.Router();
 
 // TODO: Add Authentication middleware
-router.route('/new').get(tourHandler.getAllToursNew);
 router
     .route('/')
     .get(tourHandler.getAllTour)

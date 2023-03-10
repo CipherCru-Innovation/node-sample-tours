@@ -8,8 +8,8 @@ interface IUser extends Document {
     email: string;
     photo?: string;
     role: string;
-    password: string;
-    passwordConfirm?: string;
+    password: String;
+    passwordConfirm?: String;
     passwordChangedAt?: Date;
     passwordResetToken?: string;
     passwordResetExpires?: Date;

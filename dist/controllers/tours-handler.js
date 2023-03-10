@@ -1,7 +1,14 @@
-"use strict";
+'use strict';
 /** @format */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteTour = exports.updateTour = exports.createNewTour = exports.getTourById = exports.getAllTour = exports.resizeTourImages = exports.uploadTourImages = void 0;
+Object.defineProperty(exports, '__esModule', { value: true });
+exports.deleteTour =
+    exports.updateTour =
+    exports.createNewTour =
+    exports.getTourById =
+    exports.getAllTour =
+    exports.resizeTourImages =
+    exports.uploadTourImages =
+        void 0;
 /** @format */
 const multer = require('multer');
 const sharp = require('sharp');
@@ -14,10 +21,12 @@ const catchAsync = require('../../utils/catch-async');
 const multerStorage = multer.memoryStorage();
 const multerFilter = (req, file, callback) => {
     console.info(file);
-    if (file.mimetype.startsWith('image'))
-        callback(null, true);
+    if (file.mimetype.startsWith('image')) callback(null, true);
     else
-        callback(new AppError('Invalid Image Format', StatusCodes.BAD_REQUEST), false);
+        callback(
+            new AppError('Invalid Image Format', StatusCodes.BAD_REQUEST),
+            false
+        );
 };
 const upload = multer({
     storage: multerStorage,
@@ -28,8 +37,7 @@ exports.uploadTourImages = upload.fields([
     { name: 'images', maxCount: 5 }
 ]);
 exports.resizeTourImages = catchAsync(async (req, res, next) => {
-    if (!req.files || !req.files.images)
-        return next();
+    if (!req.files || !req.files.images) return next();
     const imageCoverName = `tour-${req.params.id}-${Date.now()}-cover.jpeg`;
     await sharp(req.files.imageCover[0].buffer)
         .resize(2000, 1333)
@@ -38,16 +46,20 @@ exports.resizeTourImages = catchAsync(async (req, res, next) => {
         .toFile(`public/images/tours/${imageCoverName}`);
     req.body.imageCover = imageCoverName;
     req.body.images = [];
-    await Promise.all(req.files.images.map(async (imageField, index) => {
-        const imageName = `tour-${req.params.id}-${Date.now()}-${index}.jpeg`;
-        await sharp(imageField.buffer)
-            .resize(2000, 1333)
-            .toFormat('jpeg')
-            .jpeg({ quality: 90 })
-            .toFile(`public/images/tours/${imageName}`);
-        req.body.images.push(imageName);
-    }));
-    console.log(req.body);
+    await Promise.all(
+        req.files.images.map(async (imageField, index) => {
+            const imageName = `tour-${
+                req.params.id
+            }-${Date.now()}-${index}.jpeg`;
+            await sharp(imageField.buffer)
+                .resize(2000, 1333)
+                .toFormat('jpeg')
+                .jpeg({ quality: 90 })
+                .toFile(`public/images/tours/${imageName}`);
+            req.body.images.push(imageName);
+        })
+    );
+
     return next();
 });
 exports.getAllTour = dataFactory.getPaginated(Tour);

@@ -2,7 +2,7 @@
 
 import crypto = require('crypto');
 import { StatusCodes } from 'http-status-codes';
-import { Request, Response, NextFunction, RequestHandler } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import User, { UserDocument } from '../models/users/user';
 
 import catchAsync from '../utils/catch-async';
@@ -11,7 +11,12 @@ import * as jwtUtils from '../utils/jwt-utils';
 import * as emailUtils from '../utils/email-utils';
 import AppError from '../exceptions/app-error';
 import { sendSuccess } from '../factory/response-handler';
-import { AppRequest } from '../models/http/request.model';
+import {
+    AppRequest,
+    ForgotPasswordRequest,
+    LoginRequest,
+    UpdatePasswordRequest
+} from '../models/http/request.model';
 
 export const signup = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
@@ -24,12 +29,11 @@ export const signup = catchAsync(
 
 // TODO: limit user Login to 3 failed attempts
 export const login = catchAsync(
-    async (req: Request, res: Response, next: NextFunction) => {
-        const { username, password } = req.body;
+    async (req: LoginRequest, res: Response, next: NextFunction) => {
+        const { username, password, email } = req.body;
 
-        console.info(req.body);
         // If email and password exists
-        if (!username || !password) {
+        if (!username || !password || !email) {
             return next(
                 new AppError('Invalid credentials', StatusCodes.BAD_REQUEST)
             );
@@ -41,7 +45,7 @@ export const login = catchAsync(
             '+password'
         );
 
-        // generate Tokena and send response
+        // generate Token and send response
         if (
             !loggedInUser ||
             !(await loggedInUser.matchPassword(password, loggedInUser.password))
@@ -105,7 +109,7 @@ export const isLoggedIn = catchAsync(
             // verify jwt token
             // check for the token is expired or not.
             // jwt will throw JsonWebTokenError if failed to decode.
-            const decodedToken: any = await jwtUtils.decode(token);
+            const decodedToken: any = jwtUtils.decode(token);
 
             // validate the token and the user credentials
             // check if the user exists for the give token.
@@ -121,7 +125,7 @@ export const isLoggedIn = catchAsync(
 );
 
 export const forgotPassword = catchAsync(
-    async (req: Request, res: Response, next: NextFunction) => {
+    async (req: ForgotPasswordRequest, res: Response, next: NextFunction) => {
         const user = await User.findOne({ email: req.body.email });
 
         if (!user)
@@ -181,7 +185,7 @@ export const validateResetToken = catchAsync(
 );
 
 export const resetPassword = catchAsync(
-    async (req: Request, res: Response, next: NextFunction) => {
+    async (req: AppRequest, res: Response, next: NextFunction) => {
         // Get User based on the reset token
 
         const hashedRestToken = crypto
@@ -240,11 +244,11 @@ export const getCurrentUser = (
 };
 
 export const updatePassword = catchAsync(
-    async (req: AppRequest, res: Response, next: NextFunction) => {
+    async (req: UpdatePasswordRequest, res: Response, next: NextFunction) => {
         // Get the current user
-        const currentUser = await User.findById(req.user._id).select(
-            '+password'
-        );
+        const currentUser: UserDocument | null = await User.findById(
+            req.user._id
+        ).select('+password');
 
         if (!currentUser) {
             return next(

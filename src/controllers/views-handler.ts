@@ -13,7 +13,6 @@ export const getOverview = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
         // Get Tours form DB
         const tours: ITour[] = await Tour.find();
-        console.log(tours);
         res.status(200).render('overview', {
             title: 'All tours',
             tours
@@ -40,6 +39,10 @@ export const getTour = catchAsync(
 
 export const getLoginForm = (req: Request, res: Response) => {
     res.status(StatusCodes.OK).render('login');
+};
+
+export const getSignUpFrom = (req: Request, res: Response) => {
+    res.status(StatusCodes.OK).render('signup');
 };
 
 export const getProfile = (req: Request, res: Response) => {

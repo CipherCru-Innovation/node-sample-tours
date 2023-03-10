@@ -8,13 +8,18 @@ import { sendSuccess } from './response-handler';
 import { Model } from 'mongoose';
 
 import MongoQueryBuilder from '../utils/mongo-query-builder';
-import tour from '../models/tours/tour';
-import QueryParams from 'models/http/query';
+import { TourRequest } from 'models/http/request.model';
 
 export const deleteOne = (m: Model<any>) =>
     catchAsync(async (req: Request, res: Response, next: NextFunction) => {
         const data = await m.findByIdAndDelete(req.params.id);
-        if (!data) return next(new AppError('No data found with this Id', StatusCodes.NOT_FOUND));
+        if (!data)
+            return next(
+                new AppError(
+                    'No data found with this Id',
+                    StatusCodes.NOT_FOUND
+                )
+            );
 
         return sendSuccess(res, StatusCodes.NO_CONTENT);
     });
@@ -26,7 +31,12 @@ export const updateOne = (m: Model<any>) =>
             runValidators: true
         });
         if (!update)
-            return next(new AppError('No record found with this Id', StatusCodes.NOT_FOUND));
+            return next(
+                new AppError(
+                    'No record found with this Id',
+                    StatusCodes.NOT_FOUND
+                )
+            );
         const data = {
             [m.modelName]: update
         };
@@ -48,15 +58,23 @@ export const getById = (m: Model<any>, populateOptions?: any) =>
 
         const doc = await query;
 
-        if (!doc) return next(new AppError('No record found with this Id', StatusCodes.NOT_FOUND));
+        if (!doc)
+            return next(
+                new AppError(
+                    'No record found with this Id',
+                    StatusCodes.NOT_FOUND
+                )
+            );
         const data = { [m.modelName.toLowerCase()]: doc };
         return sendSuccess(res, StatusCodes.OK, data);
     });
 
-export const getPaginated = <T>(m: Model<T>, populateOptions?: any) =>
-    catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-        console.log(m);
-        const finalQuery = new MongoQueryBuilder(m.find({ notInSchema: 1 }), req.query).build();
+export const getPaginated = <T>(m: Model<T>, options?: any) =>
+    catchAsync(async (req: TourRequest, res: Response, next: NextFunction) => {
+        const finalQuery = new MongoQueryBuilder(
+            m.find({ notInSchema: 1 }),
+            req.query
+        ).build();
         // if (populateOptions)
         //     // TODO: prepare Populate options
         //     finalQuery.populate(populateOptions);
@@ -67,15 +85,3 @@ export const getPaginated = <T>(m: Model<T>, populateOptions?: any) =>
         const data = { [m.modelName.toLowerCase()]: doc };
         sendSuccess(res, StatusCodes.OK, data, { pageData });
     });
-
-export const getAll = async <T>(m: Model<T>, query?: QueryParams, populateOptions?: any) => {
-    const finalQuery = new MongoQueryBuilder<T>(m.find(), query).build();
-
-    // if (populateOptions)
-    // TODO: prepare Populate options
-    // finalQuery.populate(populateOptions);
-
-    const pageData = await finalQuery.getPageData();
-    const doc = await finalQuery.query;
-    return doc;
-};

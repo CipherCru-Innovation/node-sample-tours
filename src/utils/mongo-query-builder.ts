@@ -1,34 +1,48 @@
 /** @format */ import { QueryWithHelpers } from 'mongoose';
 import QueryParams from '../models/http/query';
 
-class MongoQueryBuilder<T, Q extends QueryParams> {
-    private queryString: Q;
+class MongoQueryBuilder<T, Q extends QueryParams | undefined> {
+    private queryString: Q | undefined;
 
     public query: QueryWithHelpers<T | T[] | null, T>;
 
-    private excludedFields: string[] = ['page', 'sort', 'limit', 'fields', 'size'];
+    private excludedFields: string[] = [
+        'page',
+        'sort',
+        'limit',
+        'fields',
+        'size'
+    ];
 
     private page = 1;
 
     private size = 20;
 
-    constructor(query: QueryWithHelpers<T | T[] | null, T>, queryString: Q) {
+    constructor(
+        query: QueryWithHelpers<T | T[] | null, T>,
+        queryString: Q | undefined
+    ) {
         this.query = query;
         this.queryString = queryString;
     }
 
     filter() {
-        const queryObj: Q = { ...this.queryString };
+        const queryObj: any = { ...this.queryString };
 
-        this.excludedFields.forEach((field: string) => {
-            queryObj[field] = undefined;
-        });
+        if (queryObj) {
+            this.excludedFields.forEach((field: string) => {
+                queryObj[field] = undefined;
+            });
+        }
 
         //
         let queryStr = JSON.stringify(queryObj);
 
         // gte, gt, lte, lt, like
-        queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+        queryStr = queryStr.replace(
+            /\b(gte|gt|lte|lt)\b/g,
+            (match) => `$${match}`
+        );
 
         this.query = this.query.find(JSON.parse(queryStr));
 
@@ -36,17 +50,17 @@ class MongoQueryBuilder<T, Q extends QueryParams> {
     }
 
     sortData() {
-        if (this.queryString.sort) {
+        if (this.queryString?.sort) {
             this.query = this.query.sort(this.getSortFields());
         }
         return this;
     }
 
     getSortFields(): string | undefined {
-        if (this.queryString.sort) {
+        if (this.queryString?.sort) {
             if (this.queryString.sort instanceof Array) {
                 const sortFields: string[] = [];
-                this.queryString.sort.forEach((ele: string) => {
+                this.queryString?.sort.forEach((ele: string) => {
                     const [sortField, sortOrder] = ele.split(',');
 
                     if (sortOrder && sortOrder.toUpperCase() === 'DESC') {
@@ -67,8 +81,8 @@ class MongoQueryBuilder<T, Q extends QueryParams> {
     }
 
     paginate() {
-        this.page = this.queryString.page ? this.queryString.page : 1;
-        this.size = this.queryString.size ? this.queryString.size : 1;
+        this.page = this.queryString?.page ? this.queryString.page : 1;
+        this.size = this.queryString?.size ? this.queryString.size : 1;
 
         const skipRecords = (this.page - 1) * this.size;
 
@@ -77,7 +91,7 @@ class MongoQueryBuilder<T, Q extends QueryParams> {
     }
 
     fields() {
-        if (this.queryString.fields) {
+        if (this.queryString?.fields) {
             const fields = this.queryString.fields.split(',').join(' ');
             this.query = this.query.select(fields);
         } else {
@@ -88,7 +102,12 @@ class MongoQueryBuilder<T, Q extends QueryParams> {
 
     build(paginate?: boolean) {
         this.filter().fields().sortData();
-        if (paginate === true || this.queryString.page || this.queryString.size) this.paginate();
+        if (
+            paginate === true ||
+            this.queryString?.page ||
+            this.queryString?.size
+        )
+            this.paginate();
         return this;
     }
 

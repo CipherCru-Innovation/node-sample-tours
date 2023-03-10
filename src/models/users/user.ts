@@ -7,12 +7,9 @@ import * as bcrypt from 'bcryptjs';
 import mongoose, { HydratedDocument, Model, Schema } from 'mongoose';
 import { encryptPasswordOnSave } from './user-middleware';
 
-export interface UserDocument extends IUser, Document {
+export interface UserDocument extends IUser {
     createPasswordResetToken(): void;
-    matchPassword(
-        candidatePassword: String,
-        userPassword: String
-    ): Promise<boolean>;
+    matchPassword(candidatePassword: String, userPassword: String): Promise<boolean>;
 }
 
 const userSchema = new Schema(
@@ -48,10 +45,7 @@ const userSchema = new Schema(
             required: [true, 'Confirm your password'],
             validate: {
                 // This only works on CREATE and SAVE!!!
-                validator: function (
-                    this: HydratedDocument<IUser>,
-                    el: String
-                ) {
+                validator: function (this: HydratedDocument<IUser>, el: String) {
                     return el === this.password;
                 },
                 message: 'Password does not match.'
@@ -128,12 +122,7 @@ userSchema.methods.changedPasswordAfter = function (
 userSchema.methods.createPasswordResetToken = function () {
     const resetToken = crypto.randomBytes(32).toString('hex');
 
-    this.passwordResetToken = crypto
-        .createHash('sha256')
-        .update(resetToken)
-        .digest('hex');
-
-    // console.log({ resetToken }, this.passwordResetToken);
+    this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex');
 
     this.passwordResetExpires = Date.now() + 8 * 60 * 60 * 1000;
 
