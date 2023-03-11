@@ -10,9 +10,9 @@
         "tsc": "tsc",
         "debug": "ndb server.js",
         "start": "ts-node src/server.js",
-        "start:local" : "nodemon src/server.ts",
+        "start:local": "nodemon src/server.ts",
         "watch": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
-        "build:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
+        "build:js": "parcel build ./public/js/index.js --out-dir ./dis/public/js --out-file bundle.js",
         "lint": "eslint --fix . && prettier --write ."
     },
     "repository": {

@@ -1,12 +1,10 @@
 /** @format */
 
-import { ConnectOptions } from 'mongoose';
 import { initMongo } from './dbconfig';
 import { initConfig } from './env.config';
-
+import app from './app';
 initConfig();
 initMongo();
-const app = require('./app');
 
 const SERVER_PORT = process.env.SERVER_PORT || 8000;
 
