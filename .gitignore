@@ -1,2 +1,10 @@
+out/
+# TS -incremental file
+tsconfig.tsbuildinfo
 node_modules
 package-lock.json
+*.env
+.cache/
+.eslintrc
+.prettierrc
+/dist
